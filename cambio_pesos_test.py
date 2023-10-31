@@ -42,6 +42,27 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return START_ROUTES
 
 
+async def start_over(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Prompt same text & keyboard as `start` does but not as new message"""
+    # Get CallbackQuery from Update
+    query = update.callback_query
+    # CallbackQueries need to be answered, even if no notification to the user is needed
+    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
+    await query.answer()
+    keyboard = [
+        [
+            InlineKeyboardButton("1", callback_data=str(ONE)),
+            InlineKeyboardButton("2", callback_data=str(TWO)),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    # Instead of sending a new message, edit the message that
+    # originated the CallbackQuery. This gives the feeling of an
+    # interactive menu.
+    await query.edit_message_text(text="Start handler, Choose a route", reply_markup=reply_markup)
+    return START_ROUTES
+
+
 async def one(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Show new choice of buttons"""
     query = update.callback_query
@@ -151,3 +172,7 @@ def main() -> None:
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
+
+
+if __name__ == "__main__":
+    main()
