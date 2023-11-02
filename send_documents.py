@@ -7,7 +7,7 @@ TOKEN = '6718203881:AAHglMpdnxv382DmXMwt1L8i4-gG6ere9ao'
 # Manejador para el comando /enviarexcel
 def send_excel(update, context):
     user_id = update.effective_user.id
-    doc_file = open('BabaBooey.xlsx', 'rb')
+    doc_file = open('EigenSeedTelegram\BabaBooey.xlsx', 'rb')
     username = update.message.from_user.name
     # Reemplaza con la ruta de tu archivo Excel
     # excel_file_path = 'C:/Users/Fernando/OneDrive/Documentos/PythonProjects/Python/eigenseed_telegrambots/EigenSeedTelegram/BabaBooey.xlsx'
